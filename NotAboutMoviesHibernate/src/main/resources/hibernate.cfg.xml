@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- you must specify that the DOCTYPE is a hibernate configuration document 
+	and then provide the link to the DTD which defines the valid elemtns of a 
+	hibernate config file -->
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+        
+<!-- hibernate-conig is the root tage of any hibernate.cfg.xml file -->
+<hibernate-configuration>
+	<!-- we specify our sessions factory's properties eithin this tag. note 
+		that the session factory's properties will be applied to each session that 
+		is returned -->
+	<session-factory>
+		<!-- this denotes the driver class depending on which SQL dialect we are 
+		using -->
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<!-- now let's configure our database credentials and endpoint -->
+		<property name="hibernate.connection.url">
+			jdbc:postgresql://db-practice.cqasubkrnxht.us-east-2.rds.amazonaws.com/DemoDB
+		</property>
+		<property name="hibernate.connection.username">postgres</property>
+		<property name="hibernate.connection.password">14791dy.h</property>
+	<!-- The folowing determines how many connections a single user can have 
+		to your DB. Having several connectin will pseed up the DB process for the 
+		user, but this will also eat up any available connections you have for your 
+		DB much more quickly -->
+		<property name="hibernate.connection.pool_size">5</property>
+		<!-- this writes all of the gernated SQL Hibernate is using to the console-->
+		<property name="show_sql">true</property>
+		<!-- all hibernate sessions should be thread-safe! -->
+		<property name="hibernate.current_session_context_class">thread</property>
+	<!-- this property is what tells hibernate hoe to handle entity creation 
+		within a DB. It van be 1 of 4 states: CREATE: hibernate will peurgr the existing 
+		DB and create a new one from scratch. It is bad practivce to run hibernate 
+		in CREATE mode. UPDATE: hibernate connects to the existing DB and interacts 
+		with it without removing current data. CREATE-DROP: purges existing tables 
+		and creates them from scratch. Thne, when th eapplicaiton is terminated, 
+		it purges that database once again. VALIDATE: Hibernate a pre-existing chema 
+		before updating that schema. This is the best practice -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+		<!-- Hibernate must know where to look for mapped entities -->
+		<mapping class="com.revature.model.Account"/>
+		<mapping class="com.revature.model.Playlist"/>
+	</session-factory>
+</hibernate-configuration>
