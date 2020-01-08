@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.revature.exception.NoSuchSuperPetException;
 import com.revature.model.Account;
 import com.revature.model.SuperJoke;
 import com.revature.service.AccountService;

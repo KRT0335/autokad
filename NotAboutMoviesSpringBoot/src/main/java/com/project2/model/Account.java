@@ -25,20 +25,20 @@ public class Account {
 	private String password;
 	@ManyToOne
 	@JoinColumn
-	private Playlist playList;
+	private Playlist playlist;
 
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Account(int id, String name, String username, String password, Playlist playList) {
+	public Account(int id, String name, String username, String password, Playlist playlist) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.username = username;
 		this.password = password;
-		this.playList = playList;
+		this.playlist = playlist;
 	}
 
 	public int getId() {
@@ -73,12 +73,12 @@ public class Account {
 		this.password = password;
 	}
 
-	public Playlist getPlayList() {
-		return playList;
+	public Playlist getPlaylist() {
+		return playlist;
 	}
 
-	public void setPlayList(Playlist playList) {
-		this.playList = playList;
+	public void setPlaylist(Playlist playList) {
+		this.playlist = playList;
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class Account {
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((playList == null) ? 0 : playList.hashCode());
+		result = prime * result + ((playlist == null) ? 0 : playlist.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -114,10 +114,10 @@ public class Account {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (playList == null) {
-			if (other.playList != null)
+		if (playlist == null) {
+			if (other.playlist != null)
 				return false;
-		} else if (!playList.equals(other.playList))
+		} else if (!playlist.equals(other.playlist))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -129,8 +129,8 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", playList="
-				+ playList + "]";
+		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", playlist="
+				+ playlist + "]";
 	}
 	
 }
