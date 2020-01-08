@@ -12,9 +12,9 @@ import com.project2.model.Account;
 public class AccountService {
 
 	@Autowired
-	AccountRepository userRepository;
+	AccountRepository accountRepository;
 
 	public List<Account> findAllAccounts() {
-		return userRepository.findAll();
+		return accountRepository.findAll();
 	}
 }
