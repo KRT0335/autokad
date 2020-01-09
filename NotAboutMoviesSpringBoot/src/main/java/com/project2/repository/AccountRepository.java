@@ -8,9 +8,10 @@ import org.springframework.stereotype.Repository;
 import com.project2.model.Account;
 
 //Annotation for repository
-@Repository("accountRepository")
+@Repository(value = "accountRepository")
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 
-	List<Account> findAll();
+	public <S extends Account> S save(Account a);
+	public List<Account> findAll();
 
 }

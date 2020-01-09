@@ -1,12 +1,16 @@
 package com.project2.model;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 //This is the clas for user of app
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +19,7 @@ public class Account {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "userPK")
+	@Column(name="userpk")
 	private int id;
 	@Column
 	private String name;
@@ -23,22 +27,21 @@ public class Account {
 	private String username;
 	@Column
 	private String password;
-	@ManyToOne
-	@JoinColumn
-	private Playlist playlist;
+	@OneToMany(mappedBy="account", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+//	@JoinColumn
+	private Set<Playlist> playlist = new HashSet<>();
 
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	public Account(int id, String name, String username, String password, Playlist playlist) {
+
+	public Account(int id, String name, String username, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.username = username;
 		this.password = password;
-		this.playlist = playlist;
 	}
 
 	public int getId() {
@@ -73,14 +76,6 @@ public class Account {
 		this.password = password;
 	}
 
-	public Playlist getPlaylist() {
-		return playlist;
-	}
-
-	public void setPlaylist(Playlist playList) {
-		this.playlist = playList;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -88,7 +83,6 @@ public class Account {
 		result = prime * result + id;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((playlist == null) ? 0 : playlist.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
@@ -114,11 +108,6 @@ public class Account {
 				return false;
 		} else if (!password.equals(other.password))
 			return false;
-		if (playlist == null) {
-			if (other.playlist != null)
-				return false;
-		} else if (!playlist.equals(other.playlist))
-			return false;
 		if (username == null) {
 			if (other.username != null)
 				return false;
@@ -129,8 +118,10 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password + ", playlist="
-				+ playlist + "]";
+		return "Account [id=" + id + ", name=" + name + ", username=" + username + ", password=" + password
+				+ "]";
 	}
+	
+	
 	
 }
