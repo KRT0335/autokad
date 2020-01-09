@@ -1,16 +1,14 @@
 package com.project2.web;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project2.model.Account;
+import com.project2.model.Song;
 import com.project2.model.SuperJoke;
 import com.project2.service.AccountService;
 
@@ -32,10 +31,10 @@ public class NotAboutMoviesController {
 	/*
 	 * We're using setter injection.
 	 */
-	@Autowired
-	public void setAccountService(AccountService accountService) {
-		this.accountService = accountService;
-	}
+//	@Autowired
+//	public void setAccountService(AccountService accountService) {
+//		this.accountService = accountService;
+//	}
 
 	/*
 	 * The "value" here denotes that we must use the "/home" pattern to access the
@@ -66,42 +65,28 @@ public class NotAboutMoviesController {
 		this.accountService.insertAccount(new Account("name", "username", "password"));
 	}
 	
-	@GetMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+	
+	@PostMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
 	public Account getAccountByCredentials() {
 		String u = "username";
 		String p = "passowrd";
 		return this.accountService.findAccountByCredentials(u, p);
 	}
-
-	@GetMapping(value = "/lyrics")
-	public String getApi() {
+	
+	@GetMapping(value="/lyrics/q/{q}")
+	public Song getSongs(@PathVariable("q") String q) {
+		final String url = "https://mourits-lyrics.p.rapidapi.com/?q="+ q;
 		restTemplate = new RestTemplate();
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);
-		httpHeaders.set("x-rapidapi-host", "mourits-lyrics.p.rapidapi.com");
-		httpHeaders.add("x-rapidapi-key", "2220a256eamshe293e8ca0d6332dp1f3c26jsncc1dd78ca7e0");
-		MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
-		body.add("file", "123");
-		HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, httpHeaders);
-		HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
-		URI uri = null;
-		try {
-			uri = new URI("https://mourits-lyrics.p.rapidapi.com/?artist=Bon%20Jovi&song=Livin'%20on%20a%20prayer");
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		ResponseEntity<String> responseEntity = this.restTemplate.exchange(
-//				"mourits-lyrics.p.rapidapi.com",
-//				HttpMethod.GET,
-//				httpEntity, String.class);
-//		String str = responseEntity.getBody();
-//		String str = this.restTemplate.getForObject("mourits-lyrics.p.rapidapi.com", String.class);
-//		return httpHeaders.toString() + "\n " + requestEntity.toString();
-		String str = this.restTemplate.postForEntity(uri, requestEntity, String.class).getBody().toString();
-		return str;
-//		return this.restTemplate.getForObject("mourits-lyrics.p.rapidapi.com", Lyrics.class);
-//		return responseEntity;
+		httpHeaders.add("Content-Type", "application/json");
+		httpHeaders.add("User-Agent", "Mozilla/5.0");
+		httpHeaders.add("X-RapidAPI-Host", "mourits-lyrics.p.rapidapi.com");
+		httpHeaders.add("X-RapidAPI-Key", "2220a256eamshe293e8ca0d6332dp1f3c26jsncc1dd78ca7e0");
+		
+		HttpEntity<String> entity = new HttpEntity<String>("String", httpHeaders);
+		ResponseEntity<Song> respEntity= this.restTemplate.exchange(url, HttpMethod.GET, entity, Song.class);
+		
+		return respEntity.getBody();
 	}
 
 	@GetMapping(value = "/favoritejoke")
@@ -111,4 +96,5 @@ public class NotAboutMoviesController {
 		return retrievedJoke;
 	}
 
+	
 }

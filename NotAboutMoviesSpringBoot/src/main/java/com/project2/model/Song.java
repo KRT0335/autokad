@@ -30,11 +30,22 @@ public class Song {
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "songs")
 	private Set<Playlist> playlists = new HashSet<>();
 	
-	
+	private boolean success;
+	private SongResult result;
+
 	
 	public Song() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	//From/For Mourits API retrieve
+	public Song(boolean success, SongResult result, String artist, String songname) {
+		super();
+		this.success = success;
+		this.result = result;
+		this.artist = artist;
+		this.songname = songname;
 	}
 	public Song(int songid, String songname, String artist, String lyrics) {
 		super();
@@ -67,50 +78,24 @@ public class Song {
 	public void setLyrics(String lyrics) {
 		this.lyrics = lyrics;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
-		result = prime * result + ((lyrics == null) ? 0 : lyrics.hashCode());
-		result = prime * result + songid;
-		result = prime * result + ((songname == null) ? 0 : songname.hashCode());
+
+	
+
+	public boolean isSucces() {
+		return success;
+	}
+
+	public void setSucces(boolean succes) {
+		this.success = succes;
+	}
+
+	public SongResult getResult() {
 		return result;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Song other = (Song) obj;
-		if (artist == null) {
-			if (other.artist != null)
-				return false;
-		} else if (!artist.equals(other.artist))
-			return false;
-		if (lyrics == null) {
-			if (other.lyrics != null)
-				return false;
-		} else if (!lyrics.equals(other.lyrics))
-			return false;
-		if (songid != other.songid)
-			return false;
-		if (songname == null) {
-			if (other.songname != null)
-				return false;
-		} else if (!songname.equals(other.songname))
-			return false;
-		return true;
+
+	public void setResult(SongResult result) {
+		this.result = result;
 	}
-	@Override
-	public String toString() {
-		return "Song [songid=" + songid + ", songname=" + songname + ", artist=" + artist + ", lyrics=" + lyrics + "]";
-	}
-	
-	
-	
-	
+
+
 }

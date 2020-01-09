@@ -32,8 +32,9 @@ public class AccountService {
 	public List<Account> findAllAccounts() {
 		return this.accountRepository.findAll();
 	}
-	
+
 	public Account findAccountByCredentials(String u, String p) {
 		return accountRepository.findAccountByUsernameAndPassword(u, p);
 	}
+	
 }

@@ -13,6 +13,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer>{
 
 	public <S extends Account> S save(Account a);
 	public List<Account> findAll();
-
+	
 	public Account findAccountByUsernameAndPassword(String u, String p);
 }
