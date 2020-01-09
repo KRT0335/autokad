@@ -1,0 +1,6 @@
+h1 {
+  font-size: 50px;
+  padding: 20px;
+  background-image: url("../assets/images/circle-blues.png");
+  border-bottom: 5px solid gray;
+}
