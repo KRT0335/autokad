@@ -63,7 +63,14 @@ public class NotAboutMoviesController {
 	
 	@GetMapping(value = "/new")
 	public void postAccount() {
-		this.accountService.insertAccount(new Account(1, "name", "username", "passowrd"));
+		this.accountService.insertAccount(new Account("name", "username", "password"));
+	}
+	
+	@GetMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+	public Account getAccountByCredentials() {
+		String u = "username";
+		String p = "passowrd";
+		return this.accountService.findAccountByCredentials(u, p);
 	}
 
 	@GetMapping(value = "/lyrics")

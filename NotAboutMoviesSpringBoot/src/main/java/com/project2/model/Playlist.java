@@ -1,12 +1,18 @@
 package com.project2.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -17,14 +23,19 @@ public class Playlist {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="playlistid")
+	@Column(name="playlistid", columnDefinition = "serial")
 	private int id;
 	@NotNull
 	@Column
 	private String playlistname;
-	@ManyToOne /* (cascade=CascadeType.ALL) */
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="userpk")
 	private Account account;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinTable(name="playlist_songs", 
+				joinColumns = {@JoinColumn(name="playlistid")},
+				inverseJoinColumns = {@JoinColumn(name="songid")})
+	private Set<Song> songs = new HashSet<>();
 //	@Column
 //	private String songs;
 	

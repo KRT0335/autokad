@@ -19,7 +19,7 @@ public class Account {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="userpk")
+	@Column(name="userpk", columnDefinition = "serial")
 	private int id;
 	@Column
 	private String name;
@@ -27,7 +27,7 @@ public class Account {
 	private String username;
 	@Column
 	private String password;
-	@OneToMany(mappedBy="account", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="account", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 //	@JoinColumn
 	private Set<Playlist> playlist = new HashSet<>();
 
@@ -36,6 +36,13 @@ public class Account {
 		// TODO Auto-generated constructor stub
 	}
 
+	public Account(String name, String username, String password) {
+		super();
+		this.name = name;
+		this.username = username;
+		this.password = password;
+	}
+	
 	public Account(int id, String name, String username, String password) {
 		super();
 		this.id = id;
