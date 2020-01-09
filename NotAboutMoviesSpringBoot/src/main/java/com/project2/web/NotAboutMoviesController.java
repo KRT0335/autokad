@@ -11,14 +11,15 @@ import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.project2.service.AccountService;
 import com.project2.model.Account;
 import com.project2.model.SuperJoke;
+import com.project2.service.AccountService;
 
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
@@ -55,11 +56,24 @@ public class NotAboutMoviesController {
 		return "index";
 	}
 
+<<<<<<< HEAD
 //	@GetMapping(value="/all", produces=MediaType.APPLICATION_JSON_VALUE)
 //	public List<Account> getAllAccounts() {
 //		return this.accountService.findAllAccounts();
 //	}
 /*
+=======
+	@GetMapping(value="/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Account> getAllAccounts() {
+		return this.accountService.findAllAccounts();
+	}
+	
+	@GetMapping(value = "/new")
+	public void postAccount() {
+		this.accountService.insertAccount(new Account(1, "name", "username", "passowrd"));
+	}
+
+>>>>>>> a0fe81cfd3a51b7e6f3d7db2bd910470cbee56fc
 	@GetMapping(value = "/lyrics")
 	public String getApi() {
 		restTemplate = new RestTemplate();
