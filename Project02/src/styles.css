@@ -1,6 +1,10 @@
 body {
   background-image: url("./assets/images/dark-honeycomb.png");
 }
+#image {
+  border: 5px solid gray;
+  margin-bottom: 10px;
+}
 .btn {
   margin-top: 10px;
 }
@@ -20,3 +24,4 @@ body {
 #main {
   margin-top: 20px;
 }
+

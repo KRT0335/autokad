@@ -11,17 +11,6 @@
 
 <body>
   <app-root></app-root>
-  <script src="https://sdk.scdn.co/spotify-player.js"></script>
-  <script>
-    window.onSpotifyWebPlaybackSDKReady = () => {
-      const userAccessToken = "6bb356da5cae4befac0c1a7f6d15e9d1";
-      const webPlayback = new Spotify.Player({
-        name: "Spotify Web Playback SDK",
-        getOAuthToken: callback => { callback(token) }
-      });
-      webPlayback.connect();
-    };
-  </script>
 </body>
 
 </html>
