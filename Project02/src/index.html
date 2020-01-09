@@ -1,13 +1,27 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>Project02</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="./assets/images/icons8-music-16.png">
 </head>
+
 <body>
   <app-root></app-root>
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <script>
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      const userAccessToken = "6bb356da5cae4befac0c1a7f6d15e9d1";
+      const webPlayback = new Spotify.Player({
+        name: "Spotify Web Playback SDK",
+        getOAuthToken: callback => { callback(token) }
+      });
+      webPlayback.connect();
+    };
+  </script>
 </body>
+
 </html>
