@@ -31,10 +31,10 @@ public class NotAboutMoviesController {
 	/*
 	 * We're using setter injection.
 	 */
-	@Autowired
-	public void setAccountService(AccountService accountService) {
-		this.accountService = accountService;
-	}
+//	@Autowired
+//	public void setAccountService(AccountService accountService) {
+//		this.accountService = accountService;
+//	}
 
 	/*
 	 * The "value" here denotes that we must use the "/home" pattern to access the
@@ -59,7 +59,7 @@ public class NotAboutMoviesController {
 //	public List<Account> getAllAccounts() {
 //		return this.accountService.findAllAccounts();
 //	}
-
+/*
 	@GetMapping(value = "/lyrics")
 	public String getApi() {
 		restTemplate = new RestTemplate();
@@ -73,7 +73,7 @@ public class NotAboutMoviesController {
 		HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders);
 		URI uri = null;
 		try {
-			uri = new URI("https://mourits-lyrics.p.rapidapi.com/?artist=Bon%20Jovi&song=Livin'%20on%20a%20prayer");
+			uri = new URI("https://mourits-lyrics.p.rapidapi.com/?q=we%20burn%20a%20beautiful%20flame");
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,16 +85,20 @@ public class NotAboutMoviesController {
 //		String str = responseEntity.getBody();
 //		String str = this.restTemplate.getForObject("mourits-lyrics.p.rapidapi.com", String.class);
 //		return httpHeaders.toString() + "\n " + requestEntity.toString();
-		String str = this.restTemplate.postForEntity(uri, requestEntity, String.class).getBody().toString();
+//		String str = this.restTemplate.postForEntity(uri, requestEntity, String.class).getBody().toString();
+		String str = this.restTemplate.postForEntity(uri, requestEntity, String.class).toString();
 		return str;
 //		return this.restTemplate.getForObject("mourits-lyrics.p.rapidapi.com", Lyrics.class);
 //		return responseEntity;
 	}
+*/
 
 	@GetMapping(value = "/favoritejoke")
 	public SuperJoke getSuperJoke() {
+		restTemplate = new RestTemplate();
 		SuperJoke retrievedJoke = this.restTemplate.getForObject("http://api.icndb.com/jokes/random", SuperJoke.class);
 		return retrievedJoke;
 	}
 
+	
 }
