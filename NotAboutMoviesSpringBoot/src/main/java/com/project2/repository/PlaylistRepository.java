@@ -12,4 +12,5 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
 
 	public <S extends Playlist> S save(Playlist p);
 	public List<Playlist> findAll();
+	
 }

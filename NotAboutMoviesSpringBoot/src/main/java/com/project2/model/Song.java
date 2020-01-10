@@ -29,23 +29,18 @@ public class Song {
 	private String lyrics;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "songs")
 	private Set<Playlist> playlists = new HashSet<>();
-	
-	private boolean success;
-	private SongResult result;
 
 	
 	public Song() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	//From/For Mourits API retrieve
-	public Song(boolean success, SongResult result, String artist, String songname) {
+	
+	public Song(String songname, String artist, String lyrics) {
 		super();
-		this.success = success;
-		this.result = result;
-		this.artist = artist;
 		this.songname = songname;
+		this.artist = artist;
+		this.lyrics = lyrics;
 	}
 	public Song(int songid, String songname, String artist, String lyrics) {
 		super();
@@ -54,48 +49,101 @@ public class Song {
 		this.artist = artist;
 		this.lyrics = lyrics;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
+		result = prime * result + ((lyrics == null) ? 0 : lyrics.hashCode());
+		result = prime * result + ((playlists == null) ? 0 : playlists.hashCode());
+		result = prime * result + songid;
+		result = prime * result + ((songname == null) ? 0 : songname.hashCode());
+		return result;
+	}
+
+	
 	public int getSongid() {
 		return songid;
 	}
+
 	public void setSongid(int songid) {
 		this.songid = songid;
 	}
+
 	public String getSongname() {
 		return songname;
 	}
+
 	public void setSongname(String songname) {
 		this.songname = songname;
 	}
+
 	public String getArtist() {
 		return artist;
 	}
+
 	public void setArtist(String artist) {
 		this.artist = artist;
 	}
+
 	public String getLyrics() {
 		return lyrics;
 	}
+
 	public void setLyrics(String lyrics) {
 		this.lyrics = lyrics;
 	}
 
+	public Set<Playlist> getPlaylists() {
+		return playlists;
+	}
+
+	public void setPlaylists(Set<Playlist> playlists) {
+		this.playlists = playlists;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Song other = (Song) obj;
+		if (artist == null) {
+			if (other.artist != null)
+				return false;
+		} else if (!artist.equals(other.artist))
+			return false;
+		if (lyrics == null) {
+			if (other.lyrics != null)
+				return false;
+		} else if (!lyrics.equals(other.lyrics))
+			return false;
+		if (playlists == null) {
+			if (other.playlists != null)
+				return false;
+		} else if (!playlists.equals(other.playlists))
+			return false;
+		if (songid != other.songid)
+			return false;
+		if (songname == null) {
+			if (other.songname != null)
+				return false;
+		} else if (!songname.equals(other.songname))
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Song [songid=" + songid + ", songname=" + songname + ", artist=" + artist + ", lyrics=" + lyrics
+				+ ", playlists=" + playlists + "]";
+	}
+	
 	
 
-	public boolean isSucces() {
-		return success;
-	}
-
-	public void setSucces(boolean succes) {
-		this.success = succes;
-	}
-
-	public SongResult getResult() {
-		return result;
-	}
-
-	public void setResult(SongResult result) {
-		this.result = result;
-	}
-
-
+	
 }

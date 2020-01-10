@@ -2,6 +2,7 @@ package com.project2.web;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -9,32 +10,47 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project2.model.Account;
+import com.project2.model.MouritsResult;
+import com.project2.model.Playlist;
 import com.project2.model.Song;
 import com.project2.model.SuperJoke;
 import com.project2.service.AccountService;
+import com.project2.service.PlaylistService;
+import com.project2.service.SongService;
 
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
 public class NotAboutMoviesController {
 
 	private AccountService accountService;
+	private PlaylistService playlistService;
+	private SongService songService;
 
 	private RestTemplate restTemplate;
 
 	/*
 	 * We're using setter injection.
 	 */
-//	@Autowired
-//	public void setAccountService(AccountService accountService) {
-//		this.accountService = accountService;
-//	}
+	@Autowired
+	public void setAccountService(AccountService accountService) {
+		this.accountService = accountService;
+	}
+	
+	@Autowired
+	public void setPlaylistService(PlaylistService playlistService) {
+		this.playlistService = playlistService;
+	}
+	
+	@Autowired
+	public void setSongService(SongService songService) {
+		this.songService = songService;
+	}
 
 	/*
 	 * The "value" here denotes that we must use the "/home" pattern to access the
@@ -57,7 +73,9 @@ public class NotAboutMoviesController {
 
 	@GetMapping(value="/all", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getAllAccounts() {
+		
 		return this.accountService.findAllAccounts();
+		
 	}
 	
 	@GetMapping(value = "/new")
@@ -65,12 +83,22 @@ public class NotAboutMoviesController {
 		this.accountService.insertAccount(new Account("name", "username", "password"));
 	}
 	
-	
-	@PostMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
 	public Account getAccountByCredentials() {
 		String u = "username";
 		String p = "passowrd";
 		return this.accountService.findAccountByCredentials(u, p);
+	}
+	
+	@GetMapping(value="/playlist/new")
+	public void insertPlaylist() {
+		this.playlistService.insertPlaylist(new Playlist(
+				1, "My Hot Track", new Account("Owner of sick track", "username", "password")));
+	}
+	
+	@GetMapping(value = "/playlist/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Playlist> getAllPlaylists(){
+		return this.playlistService.findAllPlaylists();
 	}
 	
 	@GetMapping(value="/lyrics/q/{q}")
@@ -84,9 +112,12 @@ public class NotAboutMoviesController {
 		httpHeaders.add("X-RapidAPI-Key", "2220a256eamshe293e8ca0d6332dp1f3c26jsncc1dd78ca7e0");
 		
 		HttpEntity<String> entity = new HttpEntity<String>("String", httpHeaders);
-		ResponseEntity<Song> respEntity= this.restTemplate.exchange(url, HttpMethod.GET, entity, Song.class);
+		ResponseEntity<MouritsResult> respEntity= this.restTemplate.exchange(url, HttpMethod.GET, entity, MouritsResult.class);
 		
-		return respEntity.getBody();
+		MouritsResult result = respEntity.getBody();
+		Song song = new Song(result.getSongname(), result.getArtist(), result.getResult().getLyrics());
+		return song;
+//		return respEntity.getBody();
 	}
 
 	@GetMapping(value = "/favoritejoke")

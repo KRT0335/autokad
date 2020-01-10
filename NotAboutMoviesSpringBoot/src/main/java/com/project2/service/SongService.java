@@ -1,5 +1,7 @@
 package com.project2.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
@@ -20,5 +22,9 @@ public class SongService {
 	
 	public void insertSong(Song s) {
 		this.songRepository.save(s);
+	}
+	
+	public List<Song> getAllSongs(){
+		return this.songRepository.findAll();
 	}
 }
