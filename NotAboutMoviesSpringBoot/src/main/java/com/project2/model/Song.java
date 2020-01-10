@@ -1,24 +1,85 @@
 package com.project2.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="songs")
 public class Song {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="songid", columnDefinition = "serial")
+	private int songid;
+	@Column
+	private String songname;
+	@Column
+	private String artist;
+	@Column
+	private String lyrics;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "songs")
+	private Set<Playlist> playlists = new HashSet<>();
 	
 	private boolean success;
 	private SongResult result;
-	private String artist;
-	private String song;
+
 	
 	public Song() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Song(boolean success, SongResult result, String artist, String song) {
+	//From/For Mourits API retrieve
+	public Song(boolean success, SongResult result, String artist, String songname) {
 		super();
 		this.success = success;
 		this.result = result;
 		this.artist = artist;
-		this.song = song;
+		this.songname = songname;
 	}
+	public Song(int songid, String songname, String artist, String lyrics) {
+		super();
+		this.songid = songid;
+		this.songname = songname;
+		this.artist = artist;
+		this.lyrics = lyrics;
+	}
+	public int getSongid() {
+		return songid;
+	}
+	public void setSongid(int songid) {
+		this.songid = songid;
+	}
+	public String getSongname() {
+		return songname;
+	}
+	public void setSongname(String songname) {
+		this.songname = songname;
+	}
+	public String getArtist() {
+		return artist;
+	}
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+	public String getLyrics() {
+		return lyrics;
+	}
+	public void setLyrics(String lyrics) {
+		this.lyrics = lyrics;
+	}
+
+	
 
 	public boolean isSucces() {
 		return success;
@@ -36,66 +97,5 @@ public class Song {
 		this.result = result;
 	}
 
-	public String getArtist() {
-		return artist;
-	}
-
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
-
-	public String getSong() {
-		return song;
-	}
-
-	public void setSong(String song) {
-		this.song = song;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((artist == null) ? 0 : artist.hashCode());
-		result = prime * result + ((this.result == null) ? 0 : this.result.hashCode());
-		result = prime * result + ((song == null) ? 0 : song.hashCode());
-		result = prime * result + (success ? 1231 : 1237);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Song other = (Song) obj;
-		if (artist == null) {
-			if (other.artist != null)
-				return false;
-		} else if (!artist.equals(other.artist))
-			return false;
-		if (result == null) {
-			if (other.result != null)
-				return false;
-		} else if (!result.equals(other.result))
-			return false;
-		if (song == null) {
-			if (other.song != null)
-				return false;
-		} else if (!song.equals(other.song))
-			return false;
-		if (success != other.success)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Song [succes=" + success + ", result=" + result + ", artist=" + artist + ", song=" + song + "]";
-	}
-	
 
 }
