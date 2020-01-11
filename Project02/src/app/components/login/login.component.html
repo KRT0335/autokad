@@ -4,11 +4,11 @@
       <img id="image" src="../../../assets/images/abgt.jpg" width="300" alt="Concert Photo">
       <h1 class="color center">Welcome Back!</h1>
       <label for="username">Username</label>
-      <input type="text" class="form-control" id="username">
+      <input type="text" class="form-control" [(ngModel)]="username" required>
     </div>
     <div class="form-group form centerDiv">
       <label for="password">Password</label>
-      <input type="password" class="form-control" id="password">
+      <input type="password" class="form-control" [(ngModel)]="loginPassword" required>
       <button type="submit" class="btn btn-primary">Log In</button>
     </div>
   </form>

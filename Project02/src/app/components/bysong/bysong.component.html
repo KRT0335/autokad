@@ -1,9 +1,13 @@
-<h3 class="color center">Search by Song</h3>
+<h3 class="color center">Search for a Song</h3>
 <div class="container color">
   <form>
     <div class="form-group form centerDiv">
-      <label for="song"></label>
-      <input type="text" class="form-control" id="song">
+      <label for="artist">Artist</label>
+      <input type="text" class="form-control" [(ngModel)]="artistSearch">
+    </div>
+    <div class="form-group form centerDiv">
+      <label for="song">Song</label>
+      <input type="text" class="form-control" [(ngModel)]="songSearch">
       <button type="submit" class="btn btn-primary">Search</button>
     </div>
   </form>
