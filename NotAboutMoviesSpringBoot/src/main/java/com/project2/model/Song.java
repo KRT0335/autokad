@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name="songs")
 public class Song {
@@ -29,6 +31,7 @@ public class Song {
 	@Column
 	private String lyrics;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "songs")
+	@JsonBackReference
 	private List<Playlist> playlists = new ArrayList<>();
 
 	

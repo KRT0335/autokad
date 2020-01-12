@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "playlist")
@@ -39,7 +40,7 @@ public class Playlist {
 			joinColumns = { @JoinColumn(name = "playlistid") }, 
 			inverseJoinColumns = {
 			@JoinColumn(name = "songid") })
-	@JsonBackReference
+	@JsonManagedReference
 	private List<Song> songs = new ArrayList<>();
 //	@Column
 //	private String songs;

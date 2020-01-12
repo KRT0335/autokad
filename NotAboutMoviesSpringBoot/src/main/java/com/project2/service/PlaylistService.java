@@ -34,8 +34,8 @@ public class PlaylistService {
 		return this.playlistRepository.findAll();
 	}
 	
-	public List<AllPlaylist> giveMeAllOfThePlaylists(){
-		return this.playlistRepository.findAllAllPlaylist();
-	}
+//	public List<AllPlaylist> giveMeAllOfThePlaylists(){
+//		return this.playlistRepository.findAllAllPlaylist();
+//	}
 
 }

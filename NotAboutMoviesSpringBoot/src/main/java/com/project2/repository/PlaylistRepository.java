@@ -15,9 +15,9 @@ public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
 	public <S extends Playlist> S save(Playlist p);
 	public List<Playlist> findAll();
 	
-	@Query(value="select distinct a.userpk, a.username, p.playlistid, p.playlistname, s.songid, s.songname, s.artist, s.lyrics " + 
-			"from playlist p, playlist_songs ps, songs s, account a " + 
-			"where ps.playlistid = p.playlistid and p.userpk = a.userpk;",
-			nativeQuery = true)
-	public List<AllPlaylist> findAllAllPlaylist();
+//	@Query(value="select distinct a.userpk, a.username, p.playlistid, p.playlistname, s.songid, s.songname, s.artist, s.lyrics " + 
+//			"from playlist p, playlist_songs ps, songs s, account a " + 
+//			"where ps.playlistid = p.playlistid and p.userpk = a.userpk;",
+//			nativeQuery = true)
+//	public List<AllPlaylist> findAllAllPlaylist();
 }

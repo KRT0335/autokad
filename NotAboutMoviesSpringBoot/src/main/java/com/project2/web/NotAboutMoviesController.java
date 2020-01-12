@@ -114,36 +114,36 @@ public class NotAboutMoviesController {
 		return this.songService.getAllSongs();
 	}
 	
-	@GetMapping(value = "/playlist/all4realz", produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Playlist> giveMeAllOfThePlaylists(){
-		
-		List<Playlist> listPlaylist = new ArrayList<Playlist>();
-		List<AllPlaylist> allPlaylist = this.playlistService.giveMeAllOfThePlaylists();
-		List<Integer> listPlaylistId = allPlaylist.stream().distinct().map(AllPlaylist::getPlaylistid)
-				.distinct().collect(Collectors.toList());
-		for(Integer id : listPlaylistId) {
-//			List<Song> listSong = new ArrayList<Song>();
-			Account account = allPlaylist.stream().filter(x->x.getPlaylistid()==id)
-					.map(AllPlaylist::getAccount).distinct()
-					.collect(Collectors.toList()).get(0);
-//			listSong.add(
-//					(Song) allPlaylist.stream().filter(x->x.getPlaylistid()==id)
-//					.map(AllPlaylist::getSong).collect(Collectors.toList())
-//					);
-			List<Song> listSong = allPlaylist.stream().filter(x->x.getPlaylistid()==id)
-					.map(AllPlaylist::getSong).collect(Collectors.toList());
-			
-			
-			listPlaylist.add(new Playlist(id, 
-					allPlaylist.stream().filter(x->x.getPlaylistid()==id)
-					.map(AllPlaylist::getPlaylistname)
-					.collect(Collectors.toList()).get(0),
-					account, listSong
-					));
-		}
-		
-		return listPlaylist;
-	}
+//	@GetMapping(value = "/playlist/all4realz", produces=MediaType.APPLICATION_JSON_VALUE)
+//	public List<Playlist> giveMeAllOfThePlaylists(){
+//		
+//		List<Playlist> listPlaylist = new ArrayList<Playlist>();
+//		List<AllPlaylist> allPlaylist = this.playlistService.giveMeAllOfThePlaylists();
+//		List<Integer> listPlaylistId = allPlaylist.stream().distinct().map(AllPlaylist::getPlaylistid)
+//				.distinct().collect(Collectors.toList());
+//		for(Integer id : listPlaylistId) {
+////			List<Song> listSong = new ArrayList<Song>();
+//			Account account = allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+//					.map(AllPlaylist::getAccount).distinct()
+//					.collect(Collectors.toList()).get(0);
+////			listSong.add(
+////					(Song) allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+////					.map(AllPlaylist::getSong).collect(Collectors.toList())
+////					);
+//			List<Song> listSong = allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+//					.map(AllPlaylist::getSong).collect(Collectors.toList());
+//			
+//			
+//			listPlaylist.add(new Playlist(id, 
+//					allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+//					.map(AllPlaylist::getPlaylistname)
+//					.collect(Collectors.toList()).get(0),
+//					account, listSong
+//					));
+//		}
+//		
+//		return listPlaylist;
+//	}
 	
 	@GetMapping(value="/lyrics/q/{q}")
 	public Song getSongs(@PathVariable("q") String q) {
