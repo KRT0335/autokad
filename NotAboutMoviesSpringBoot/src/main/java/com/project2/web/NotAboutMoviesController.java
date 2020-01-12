@@ -1,6 +1,8 @@
 package com.project2.web;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.List;import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project2.model.Account;
+import com.project2.model.AllPlaylist;
 import com.project2.model.MouritsResult;
 import com.project2.model.Playlist;
 import com.project2.model.Song;
@@ -101,6 +104,47 @@ public class NotAboutMoviesController {
 		return this.playlistService.findAllPlaylists();
 	}
 	
+	@GetMapping(value="/song/new")
+	public void insertSong() {
+		this.songService.insertSong(new Song("songname", "artist", "lyrics"));
+	}
+	
+	@GetMapping(value = "/song/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Song> getAllSongs(){
+		return this.songService.getAllSongs();
+	}
+	
+	@GetMapping(value = "/playlist/all4realz", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Playlist> giveMeAllOfThePlaylists(){
+		
+		List<Playlist> listPlaylist = new ArrayList<Playlist>();
+		List<AllPlaylist> allPlaylist = this.playlistService.giveMeAllOfThePlaylists();
+		List<Integer> listPlaylistId = allPlaylist.stream().distinct().map(AllPlaylist::getPlaylistid)
+				.distinct().collect(Collectors.toList());
+		for(Integer id : listPlaylistId) {
+//			List<Song> listSong = new ArrayList<Song>();
+			Account account = allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+					.map(AllPlaylist::getAccount).distinct()
+					.collect(Collectors.toList()).get(0);
+//			listSong.add(
+//					(Song) allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+//					.map(AllPlaylist::getSong).collect(Collectors.toList())
+//					);
+			List<Song> listSong = allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+					.map(AllPlaylist::getSong).collect(Collectors.toList());
+			
+			
+			listPlaylist.add(new Playlist(id, 
+					allPlaylist.stream().filter(x->x.getPlaylistid()==id)
+					.map(AllPlaylist::getPlaylistname)
+					.collect(Collectors.toList()).get(0),
+					account, listSong
+					));
+		}
+		
+		return listPlaylist;
+	}
+	
 	@GetMapping(value="/lyrics/q/{q}")
 	public Song getSongs(@PathVariable("q") String q) {
 		final String url = "https://mourits-lyrics.p.rapidapi.com/?q="+ q;
@@ -117,7 +161,6 @@ public class NotAboutMoviesController {
 		MouritsResult result = respEntity.getBody();
 		Song song = new Song(result.getSongname(), result.getArtist(), result.getResult().getLyrics());
 		return song;
-//		return respEntity.getBody();
 	}
 
 	@GetMapping(value = "/favoritejoke")

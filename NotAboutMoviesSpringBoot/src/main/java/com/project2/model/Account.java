@@ -1,6 +1,6 @@
 package com.project2.model;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 //This is the clas for user of app
@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "account")
@@ -28,12 +30,19 @@ public class Account {
 	@Column
 	private String password;
 	@OneToMany(mappedBy="account", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JsonManagedReference
 //	@JoinColumn
-	private Set<Playlist> playlist = new HashSet<>();
+	private List<Playlist> playlist = new ArrayList<>();
 
 	public Account() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Account(int id, String username) {
+		super();
+		this.id = id;
+		this.username = username;
 	}
 
 	public Account(String name, String username, String password) {
@@ -81,6 +90,14 @@ public class Account {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Playlist> getPlaylist() {
+		return playlist;
+	}
+
+	public void setPlaylist(List<Playlist> playlist) {
+		this.playlist = playlist;
 	}
 
 	@Override
