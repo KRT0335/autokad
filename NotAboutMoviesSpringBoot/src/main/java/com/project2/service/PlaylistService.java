@@ -34,6 +34,10 @@ public class PlaylistService {
 		return this.playlistRepository.findAll();
 	}
 	
+	public Playlist findPlaylistById(int id) {
+		return this.playlistRepository.findPlaylistById(id);
+	}
+	
 //	public List<AllPlaylist> giveMeAllOfThePlaylists(){
 //		return this.playlistRepository.findAllAllPlaylist();
 //	}

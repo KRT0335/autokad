@@ -56,6 +56,12 @@ public class Playlist {
 		this.playlistname = playlistname;
 	}
 
+	public Playlist(@NotNull String playlistname, Account account) {
+		super();
+		this.playlistname = playlistname;
+		this.account = account;
+	}
+	
 	public Playlist(int id, @NotNull String playlistname, Account account) {
 		super();
 		this.id = id;
