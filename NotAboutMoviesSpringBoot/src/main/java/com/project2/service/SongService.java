@@ -27,4 +27,8 @@ public class SongService {
 	public List<Song> getAllSongs(){
 		return this.songRepository.findAll();
 	}
+	
+	public Song findSongBySongid(int id) {
+		return this.songRepository.findSongBySongid(id);
+	}
 }

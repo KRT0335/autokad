@@ -1,6 +1,8 @@
 package com.project2.web;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.List;import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.project2.model.Account;
+import com.project2.model.AllPlaylist;
 import com.project2.model.MouritsResult;
 import com.project2.model.Playlist;
 import com.project2.model.Song;
@@ -97,9 +100,44 @@ public class NotAboutMoviesController {
 				1, "My Hot Track", new Account("Owner of sick track", "username", "password")));
 	}
 	
+	@GetMapping(value="/playlist/new/{playlistname}/{userpk}/{username}")
+	public void insertNewPlaylist(@PathVariable("playlistname") String playlistname,
+								@PathVariable("userpk") int userpk,
+								@PathVariable("username") String username) {
+		this.playlistService.insertPlaylist(new Playlist(playlistname,
+								new Account(userpk, username)));
+		
+	}
+	
 	@GetMapping(value = "/playlist/all", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Playlist> getAllPlaylists(){
 		return this.playlistService.findAllPlaylists();
+	}
+	
+	@GetMapping(value="/song/new")
+	public void insertSong() {
+		
+		this.songService.insertSong(new Song("songname", "artist", "lyrics"));
+	}
+	
+	@GetMapping(value = "/song/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	public List<Song> getAllSongs(){
+		return this.songService.getAllSongs();
+	}
+	
+	@GetMapping(value="/song/add/{playlistid}/{songid}")
+	public void insertRelation(@PathVariable("playlistid") int playlistid,
+								@PathVariable("songid") int songid) {
+		Playlist tempPlaylist = this.playlistService.findPlaylistById(playlistid);
+		Song tempSong = this.songService.findSongBySongid(songid);
+		List<Playlist> tempPlaylistList = tempSong.getPlaylists();
+		List<Song> tempSongList	= tempPlaylist.getSongs();
+		tempPlaylistList.add(tempPlaylist);
+		tempSongList.add(tempSong);
+		tempSong.setPlaylists(tempPlaylistList);
+		tempPlaylist.setSongs(tempSongList);
+		this.playlistService.insertPlaylist(tempPlaylist);
+		this.songService.insertSong(tempSong);
 	}
 	
 	@GetMapping(value="/lyrics/q/{q}")
@@ -118,7 +156,6 @@ public class NotAboutMoviesController {
 		MouritsResult result = respEntity.getBody();
 		Song song = new Song(result.getSongname(), result.getArtist(), result.getResult().getLyrics());
 		return song;
-//		return respEntity.getBody();
 	}
 
 	@GetMapping(value = "/favoritejoke")

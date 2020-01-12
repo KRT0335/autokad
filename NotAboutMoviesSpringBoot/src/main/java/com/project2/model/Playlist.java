@@ -1,7 +1,7 @@
 package com.project2.model;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +17,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "playlist")
 public class Playlist {
@@ -30,13 +33,15 @@ public class Playlist {
 	private String playlistname;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "userpk")
+	@JsonBackReference
 	private Account account;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinTable(name = "playlist_songs", 
 			joinColumns = { @JoinColumn(name = "playlistid") }, 
 			inverseJoinColumns = {
 			@JoinColumn(name = "songid") })
-	private Set<Song> songs = new HashSet<>();
+	@JsonManagedReference
+	private List<Song> songs = new ArrayList<>();
 //	@Column
 //	private String songs;
 
@@ -44,12 +49,34 @@ public class Playlist {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Playlist(int id, @NotNull String playlistname) {
+		super();
+		this.id = id;
+		this.playlistname = playlistname;
+	}
 
+	public Playlist(@NotNull String playlistname, Account account) {
+		super();
+		this.playlistname = playlistname;
+		this.account = account;
+	}
+	
 	public Playlist(int id, @NotNull String playlistname, Account account) {
 		super();
 		this.id = id;
 		this.playlistname = playlistname;
 		this.account = account;
+	}
+	
+	
+
+	public Playlist(int id, @NotNull String playlistname, Account account, List<Song> songs) {
+		super();
+		this.id = id;
+		this.playlistname = playlistname;
+		this.account = account;
+		this.songs = songs;
 	}
 
 	public int getId() {
@@ -74,6 +101,22 @@ public class Playlist {
 
 	public void setAccount(Account account) {
 		this.account = account;
+	}
+
+	public String getPlaylistname() {
+		return playlistname;
+	}
+
+	public void setPlaylistname(String playlistname) {
+		this.playlistname = playlistname;
+	}
+
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
 	}
 
 	@Override

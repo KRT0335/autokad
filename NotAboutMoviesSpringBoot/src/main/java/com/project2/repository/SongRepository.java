@@ -13,6 +13,6 @@ public interface SongRepository extends JpaRepository<Song, Integer> {
 
 	public <S extends Song> S save(Song s);
 	
-//	@Query()
 	public List<Song> findAll();
+	public Song findSongBySongid(int id);
 }

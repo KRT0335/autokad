@@ -1,6 +1,7 @@
 package com.project2.model;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -12,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="songs")
@@ -28,7 +31,8 @@ public class Song {
 	@Column
 	private String lyrics;
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "songs")
-	private Set<Playlist> playlists = new HashSet<>();
+	@JsonBackReference
+	private List<Playlist> playlists = new ArrayList<>();
 
 	
 	public Song() {
@@ -95,11 +99,11 @@ public class Song {
 		this.lyrics = lyrics;
 	}
 
-	public Set<Playlist> getPlaylists() {
+	public List<Playlist> getPlaylists() {
 		return playlists;
 	}
 
-	public void setPlaylists(Set<Playlist> playlists) {
+	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 

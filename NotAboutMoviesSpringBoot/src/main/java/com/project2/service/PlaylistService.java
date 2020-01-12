@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Service;
 
+import com.project2.model.AllPlaylist;
 import com.project2.model.Playlist;
 import com.project2.repository.PlaylistRepository;
 
@@ -32,5 +33,13 @@ public class PlaylistService {
 	public List<Playlist> findAllPlaylists(){
 		return this.playlistRepository.findAll();
 	}
+	
+	public Playlist findPlaylistById(int id) {
+		return this.playlistRepository.findPlaylistById(id);
+	}
+	
+//	public List<AllPlaylist> giveMeAllOfThePlaylists(){
+//		return this.playlistRepository.findAllAllPlaylist();
+//	}
 
 }
