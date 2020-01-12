@@ -8,6 +8,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ import com.project2.model.SuperJoke;
 import com.project2.service.AccountService;
 import com.project2.service.PlaylistService;
 import com.project2.service.SongService;
-
+@CrossOrigin(origins ="http://localhost:4200")
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
 public class NotAboutMoviesController {
@@ -86,7 +87,7 @@ public class NotAboutMoviesController {
 	@GetMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
 	public Account getAccountByCredentials() {
 		String u = "username";
-		String p = "passowrd";
+		String p = "password";
 		return this.accountService.findAccountByCredentials(u, p);
 	}
 	
