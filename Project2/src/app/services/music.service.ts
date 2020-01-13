@@ -15,7 +15,7 @@ export class MusicService {
     return this.httpClient.get("http://localhost:3031/nam/home", { responseType: "text" }) as Observable<any>;
   }
 
-  getByLyrics(): Observable<Song>{
-    return this.httpClient.get<Song>("http://localhost:3031/nam/lyrics/q/down with the sickness") as Observable<Song>;
+  getByLyrics(q:string): Observable<Song>{
+    return this.httpClient.get<Song>("http://localhost:3031/nam/lyrics/q/" + q) as Observable<Song>;
   }
 }

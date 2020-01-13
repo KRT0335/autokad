@@ -12,5 +12,11 @@
             </ul>
         </li>
     </ul>
+    <form>
+        <div class="form-group col-5">
+            <label for="playlistName">Playlist Name</label>
+            <input type="text" class="form-control" #playlistName required/>
+            <button type='submit' class="btn btn-primary mr-1" (click)="createPlaylist(playlistName.value); playlistName.value=''">Add PlayList</button>
+        </div>
+    </form>
 </div>
-

@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { InterceptorService } from './services/interceptor.service';
 import { AccountService } from './services/account.service';
 import { MyPlaylistsComponent } from './components/my-playlists/my-playlists.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MyPlaylistsComponent } from './components/my-playlists/my-playlists.com
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ReactiveFormsModule
   ],
   providers: [AccountService,{provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}],
   bootstrap: [AppComponent]

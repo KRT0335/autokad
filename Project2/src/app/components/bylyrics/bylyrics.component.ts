@@ -18,10 +18,10 @@ export class BylyricsComponent implements OnInit {
   ngOnInit() {
   }
 
-  byTheLyrics(){
-    this.musicService.getByLyrics().subscribe(song => this.song = song);
+  byTheLyrics(q:string){
+    this.musicService.getByLyrics(q).subscribe(song => this.song = song);
     console.log(this.song);
-    console.log(this.musicService.getByLyrics());
+    console.log(this.musicService.getByLyrics(q));
   }
 
 }
