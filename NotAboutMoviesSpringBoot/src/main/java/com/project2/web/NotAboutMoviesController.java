@@ -156,7 +156,6 @@ public class NotAboutMoviesController {
 		this.songService.insertSong(new Song("songname", "artist", "lyrics"));
 	}
 
-//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/new/{songname}/{artist}/{lyrics}")
 	public Song insertSong(@PathVariable("songname") String songname, @PathVariable("artist") String artist,
 			@PathVariable("lyrics") String lyrics) {
@@ -173,9 +172,8 @@ public class NotAboutMoviesController {
 		return this.songService.getAllSongs();
 	}
 
-//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/add/{playlistid}/{songid}")
-	public Integer insertRelation(@PathVariable("playlistid") int playlistid, @PathVariable("songid") int songid) {
+	public void insertRelation(@PathVariable("playlistid") int playlistid, @PathVariable("songid") int songid) {
 		Playlist tempPlaylist = this.playlistService.findPlaylistById(playlistid);
 		Song tempSong = this.songService.findSongBySongid(songid);
 		List<Playlist> tempPlaylistList = tempSong.getPlaylists();
@@ -186,7 +184,7 @@ public class NotAboutMoviesController {
 		tempPlaylist.setSongs(tempSongList);
 		this.playlistService.insertPlaylist(tempPlaylist);
 		this.songService.insertSong(tempSong);
-		return 1;
+//		return 1;
 	}
 
 //	public void insertRelation(@PathVariable("playlistid") int playlistid,
