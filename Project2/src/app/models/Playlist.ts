@@ -1,5 +1,9 @@
+import {Account} from './Account';
+import {Song} from './Song';
+
 export class Playlist {
-  private id: number;
-  private playlistName: string;
-  private account: Account;
+   id: number;
+   playlistName: string;
+   account: Account;
+   songs:Song[];
 }

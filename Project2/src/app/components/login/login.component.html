@@ -11,10 +11,11 @@
       <label for="password">Password</label>
       <input type="password" class="form-control" #password required>
       <!-- <input type="password" class="form-control" [(ngModel)]="account.password" required> -->
-      <button type="submit" class="btn btn-primary" (click)="get(username.value, password.value); username.value=''; password.value=''">Log In</button>
+      <button type="submit" class="btn btn-primary" (click)="loginCalled(username.value, password.value); username.value=''; password.value=''">Log In</button>
     </div>
   </form>
 </div>
 <div class="color">
-  {{any}}
+  <!-- {{any}} -->
+  <!-- {{currentUser}} -->
 </div>

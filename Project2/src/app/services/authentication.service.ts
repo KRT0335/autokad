@@ -22,14 +22,15 @@ return this.currentUserSubject.value;
 }
  
 login(username: string, password: string) {
-return this.http.post<any>(`http://localhost:3031/nam/login/`+username+'/'+password, { username, password })
+return this.http.get<any>(`http://localhost:3031/nam/login/`+username+'/'+password)
 .pipe(map(user => {
-if (user && user.token) {
+if (user) {
 // store user details in local storage to keep user logged in
-localStorage.setItem('currentUser', JSON.stringify(user.result));
+localStorage.setItem('currentUser', JSON.stringify(user));
 this.currentUserSubject.next(user);
 }
  
+
 return user;
 }));
 }
