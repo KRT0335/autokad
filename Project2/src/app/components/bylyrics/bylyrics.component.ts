@@ -48,7 +48,7 @@ export class BylyricsComponent implements OnInit {
 
   addSong(playlistid:number){
     if(playlistid == 0){
-
+      console.log("No Playlists");
     }else{
       // console.log(playlistid);
       this.musicService.getSong(this.song).subscribe(song => {
