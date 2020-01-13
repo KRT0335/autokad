@@ -41,4 +41,8 @@ public class AccountService {
 		return this.accountRepository.findAccountByUsernameOrPassword(u, p);
 	}
 	
+	public Account findAccountById(int id) {
+		return this.accountRepository.findAcountById(id);
+	}
+	
 }

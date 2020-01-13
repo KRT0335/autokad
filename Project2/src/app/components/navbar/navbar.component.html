@@ -15,6 +15,9 @@
     <li *ngIf=currentUser>
       <a class="nav-link" (click)='logout()'>LOG OUT</a>
     </li>
+    <li *ngIf=currentUser>
+      <a class="nav-link" routerLink="myplaylists">MY PLAYLISTS</a>
+    </li>
     <li>
       <a class="nav-link" routerLink="bylyrics">SEARCH BY LYRICS</a>
     </li>
@@ -22,5 +25,5 @@
       <a class="nav-link" routerLink="bysong">SEARCH FOR A SONG</a>
     </li>
   </ul>
-  <!-- <p *ngIf=currentUser>{{currentUser.username}}</p> -->
+  <!-- <p *ngIf=currentUser>{{currentUser | json}}</p> -->
 </nav>

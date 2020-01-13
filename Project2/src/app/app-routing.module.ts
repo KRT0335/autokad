@@ -6,6 +6,7 @@ import { BysongComponent } from './components/bysong/bysong.component';
 import { BylyricsComponent } from './components/bylyrics/bylyrics.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from './helpers/auth.guard';
+import { MyPlaylistsComponent } from './components/my-playlists/my-playlists.component';
 
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   { component: LoginComponent, path: "login" },
   { component: BylyricsComponent, path: "bylyrics" },
   { component: BysongComponent, path: "bysong" },
+  { component: MyPlaylistsComponent, canActivate: [AuthGuard], path: 'myplaylists'},
   { path: '**', redirectTo: ''}
 ];
 

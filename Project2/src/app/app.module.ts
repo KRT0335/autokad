@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { InterceptorService } from './services/interceptor.service';
 import { AccountService } from './services/account.service';
+import { MyPlaylistsComponent } from './components/my-playlists/my-playlists.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AccountService } from './services/account.service';
     SignupComponent,
     NavbarComponent,
     BylyricsComponent,
-    HomeComponent
+    HomeComponent,
+    MyPlaylistsComponent
   ],
   imports: [
     BrowserModule,
