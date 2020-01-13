@@ -22,7 +22,8 @@ return this.currentUserSubject.value;
 }
  
 login(username: string, password: string) {
-return this.http.get<any>(`http://localhost:3031/nam/login/`+username+'/'+password)
+// return this.http.get<any>(`http://localhost:3031/nam/login/`+username+'/'+password)
+return this.http.get<any>(`http://3.19.223.241:8089/nam/login/`+username+'/'+password)
 .pipe(map(user => {
 if (user) {
 // store user details in local storage to keep user logged in

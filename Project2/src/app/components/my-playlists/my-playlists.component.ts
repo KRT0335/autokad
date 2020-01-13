@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
+import { Playlist } from 'src/app/models/Playlist';
 
 @Component({
   selector: 'app-my-playlists',
@@ -10,13 +11,14 @@ import { ToastrService } from 'ngx-toastr';
 export class MyPlaylistsComponent implements OnInit {
 
   public currentUser;
-  acc:Account;
+  acc:any;
+  play:Playlist;
   constructor(
     private accountService:AccountService,
     private toastr:ToastrService
   ) {
     this.currentUser = localStorage.getItem('currentUser')?JSON.parse(localStorage.getItem('currentUser')):'';
-    this.accountService.getAccount(this.currentUser.id).subscribe(acc=>this.acc=acc);
+    this.accountService.getAccount(this.currentUser.id).subscribe(acc=>this.play=acc.playlist);
    }
 
   ngOnInit() {

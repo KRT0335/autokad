@@ -13,7 +13,7 @@ import {
   req: HttpRequest<any>,
   next: HttpHandler
   ): Observable<HttpEvent<any>> {
-  let reqUrl = environment.apiBaseUrl;
+  let reqUrl = '';
   req = req.clone({
   headers: req.headers.set(
   "Authorization",
