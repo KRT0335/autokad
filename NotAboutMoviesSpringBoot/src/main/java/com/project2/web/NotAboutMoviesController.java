@@ -29,7 +29,7 @@ import com.project2.service.SongService;
 
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
-//@CrossOrigin()
+@CrossOrigin()
 public class NotAboutMoviesController {
 
 	private AccountService accountService;
@@ -66,20 +66,20 @@ public class NotAboutMoviesController {
 	 * We've also specified that the only acceptable method is "GET".
 	 */
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home() {
 		return "This is suppose to be the home page";
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@RequestMapping(value = "/index", method = RequestMethod.GET)
 	public String index() {
 		// This string refers to the name of a view we have created.
 		return "index";
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getAllAccounts() {
 
@@ -87,7 +87,7 @@ public class NotAboutMoviesController {
 
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/new")
 	public void postAccount() {
 		this.accountService.insertAccount(new Account("name", "username", "password"));
@@ -101,7 +101,7 @@ public class NotAboutMoviesController {
 		return this.accountService.findAccountByCredentials(u, p);
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/login/{username}/{password}")
 	public Account login(@PathVariable("username") String username, @PathVariable("password") String password) {
 		Account acc = this.accountService.findAccountByCredentials(username, password);
@@ -112,7 +112,7 @@ public class NotAboutMoviesController {
 		return null;
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/register/{name}/{username}/{password}")
 	public Account register(@PathVariable("name") String name, @PathVariable("username") String username,
 			@PathVariable("password") String password) {
@@ -127,21 +127,21 @@ public class NotAboutMoviesController {
 		return newAcc;
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/playlist/new")
 	public void insertPlaylist() {
 		this.playlistService.insertPlaylist(
 				new Playlist(1, "My Hot Track", new Account("Owner of sick track", "username", "password")));
 	}
 	
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/playlist/new/{playlistname}/{userpk}")
 	public void insertNewPlaylist(@PathVariable("playlistname") String playlistname, @PathVariable("userpk") int userpk) {
 		Account account = findAccountById(userpk);
 		this.playlistService.insertPlaylist(new Playlist(playlistname, account));
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/playlist/new/{playlistname}/{userpk}/{username}")
 	public void insertNewPlaylist(@PathVariable("playlistname") String playlistname, @PathVariable("userpk") int userpk,
 			@PathVariable("username") String username) {
@@ -149,26 +149,26 @@ public class NotAboutMoviesController {
 
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/playlist/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Playlist> getAllPlaylists() {
 		return this.playlistService.findAllPlaylists();
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account findAccountById(@PathVariable("id") int id) {
 		return this.accountService.findAccountById(id);
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/new")
 	public void insertSong() {
 
 		this.songService.insertSong(new Song("songname", "artist", "lyrics"));
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/new/{songname}/{artist}/{lyrics}")
 	public Song insertSong(@PathVariable("songname") String songname, @PathVariable("artist") String artist,
 			@PathVariable("lyrics") String lyrics) {
@@ -180,13 +180,13 @@ public class NotAboutMoviesController {
 		return song;
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Song> getAllSongs() {
 		return this.songService.getAllSongs();
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/add/{playlistid}/{songid}")
 	public Integer insertRelation(@PathVariable("playlistid") int playlistid, @PathVariable("songid") int songid) {
 		Playlist tempPlaylist = this.playlistService.findPlaylistById(playlistid);
@@ -216,7 +216,7 @@ public class NotAboutMoviesController {
 //		this.songService.insertSong(tempSong);
 //	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/lyrics/q/{q}")
 	public Song getSongs(@PathVariable("q") String q) {
 		final String url = "https://mourits-lyrics.p.rapidapi.com/?q=" + q;
