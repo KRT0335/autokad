@@ -22,7 +22,7 @@
         <option *ngFor="let playlist of play" value={{playlist.id}}>{{playlist.playlistname}}</option>
       </select>
       <button type="submit" class="btn btn-primary" (click)="addSong(playlistid.value); playlistid.value=''">Add</button>
-      <p>{{play | json}}</p>
+      <!-- <p>{{play | json}}</p> -->
     </div>
   </form>
 </div>
