@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-my-playlists',
@@ -11,16 +10,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class MyPlaylistsComponent implements OnInit {
 
   public currentUser;
-  playlistForm: FormGroup;
-  // public list;
   acc:Account;
   constructor(
     private accountService:AccountService,
-    private toastr:ToastrService,
-    private formBuilder:FormBuilder
+    private toastr:ToastrService
   ) {
     this.currentUser = localStorage.getItem('currentUser')?JSON.parse(localStorage.getItem('currentUser')):'';
-    // this.list = this.printPlaylist(this.currentUser.id);
     this.accountService.getAccount(this.currentUser.id).subscribe(acc=>this.acc=acc);
    }
 
@@ -32,12 +27,10 @@ export class MyPlaylistsComponent implements OnInit {
     this.accountService.getAccount(this.currentUser.id).subscribe(acc=>this.acc=acc);
   }
 
-  get f() { return this.playlistForm.controls; }
-
   printPlaylist(id:number){
     return this.accountService.getAccount(id).subscribe(
       data => {
-        console.log(data);
+        // console.log(data);
       },
       error => {
         this.toastr.error(error.error.message, "Error");

@@ -19,4 +19,8 @@ export class AccountService {
   addPlaylist(playlistName:string, id:number){
     return this.http.get<Account>('http://localhost:3031/nam/playlist/new/'+playlistName+'/'+id);
   }
+  
+  getAllAccount(){
+    return this.http.get<Account[]>('http://localhost:3031/nam/all');
+  }
 }

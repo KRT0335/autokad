@@ -31,4 +31,8 @@ public class SongService {
 	public Song findSongBySongid(int id) {
 		return this.songRepository.findSongBySongid(id);
 	}
+	
+	public Song findSongBySongnameAndArtistAndLyrics(String songname, String artist, String lyrics) {
+		return this.songRepository.findSongBySongnameAndArtistAndLyrics(songname, artist, lyrics);
+	}
 }
