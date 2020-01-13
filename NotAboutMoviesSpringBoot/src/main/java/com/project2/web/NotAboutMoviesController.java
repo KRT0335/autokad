@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import com.project2.model.Account;
 import com.project2.model.AllPlaylist;
@@ -27,6 +28,7 @@ import com.project2.model.SuperJoke;
 import com.project2.service.AccountService;
 import com.project2.service.PlaylistService;
 import com.project2.service.SongService;
+
 @CrossOrigin(origins ="http://localhost:4200")
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
@@ -38,6 +40,7 @@ public class NotAboutMoviesController {
 
 	private RestTemplate restTemplate;
 
+	final String origin = "http://localhost:4200";
 	/*
 	 * We're using setter injection.
 	 */
@@ -150,12 +153,17 @@ public class NotAboutMoviesController {
 		httpHeaders.add("X-RapidAPI-Host", "mourits-lyrics.p.rapidapi.com");
 		httpHeaders.add("X-RapidAPI-Key", "2220a256eamshe293e8ca0d6332dp1f3c26jsncc1dd78ca7e0");
 		
-		HttpEntity<String> entity = new HttpEntity<String>("String", httpHeaders);
-		ResponseEntity<MouritsResult> respEntity= this.restTemplate.exchange(url, HttpMethod.GET, entity, MouritsResult.class);
+		try {
+			HttpEntity<String> entity = new HttpEntity<String>("String", httpHeaders);
+			ResponseEntity<MouritsResult> respEntity= this.restTemplate.exchange(url, HttpMethod.GET, entity, MouritsResult.class);
+			
+			MouritsResult result = respEntity.getBody();
+			Song song = new Song(result.getSongname(), result.getArtist(), result.getResult().getLyrics());
+			return song;
+		}catch(UnknownHttpStatusCodeException e) {
+			return new Song("API NO WORK", "UH OH", "The API Mourits Lyrics is down.");
+		}
 		
-		MouritsResult result = respEntity.getBody();
-		Song song = new Song(result.getSongname(), result.getArtist(), result.getResult().getLyrics());
-		return song;
 	}
 
 	@GetMapping(value = "/favoritejoke")

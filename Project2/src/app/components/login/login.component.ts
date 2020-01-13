@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MusicService } from '../../services/music.service';
+import {Account} from '../../models/Account';
 
 @Component({
   selector: 'app-login',
@@ -8,14 +9,16 @@ import { MusicService } from '../../services/music.service';
 })
 export class LoginComponent implements OnInit {
 
+  private account:Account;
   constructor(private musicService: MusicService) { }
 
   any: string;
   ngOnInit() {
-    this.get();
+    // this.get();
   }
 
-  get() {
+  get(username:string, password:string) {
     this.musicService.getSomething().subscribe(any => this.any = any);
+    console.log(this.any);
   }
 }
