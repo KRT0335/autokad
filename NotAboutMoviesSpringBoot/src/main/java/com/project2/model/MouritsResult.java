@@ -40,10 +40,10 @@ public class MouritsResult {
 	public void setArtist(String artist) {
 		this.artist = artist;
 	}
-	public String getSongname() {
+	public String getSong() {
 		return songname;
 	}
-	public void setSongname(String songname) {
+	public void setSong(String songname) {
 		this.songname = songname;
 	}
 	@Override

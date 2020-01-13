@@ -218,7 +218,7 @@ public class NotAboutMoviesController {
 					MouritsResult.class);
 
 			MouritsResult result = respEntity.getBody();
-			Song song = new Song(result.getSongname(), result.getArtist(), result.getResult().getLyrics());
+			Song song = new Song(result.getSong(), result.getArtist(), result.getResult().getLyrics());
 			return song;
 		} catch (UnknownHttpStatusCodeException e) {
 			return new Song("API NO WORK", "UH OH", "The API Mourits Lyrics is down.");
