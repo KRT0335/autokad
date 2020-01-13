@@ -8,7 +8,7 @@ export class AccountService {
 
   constructor(private http:HttpClient) { }
 
-  register(user:Account){
-    return this.http.post('auth/register', user);
+  register(name:string, username:string, password:string){
+    return this.http.get(`http://localhost:3031/nam/register/`+name+`/`+username+`/`+password);
   }
 }

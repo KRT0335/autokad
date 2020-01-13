@@ -1,3 +1,3 @@
 export class SongResult {
-  private lyrics: string;
+   lyrics: string;
 }

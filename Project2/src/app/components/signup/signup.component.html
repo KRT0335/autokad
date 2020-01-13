@@ -5,15 +5,15 @@
       <h1 class="color center">Sign Up!</h1>
       <label for="name">First Name</label>
       <input type="text" class="form-control" #name required>
-    </div>
-    <div class="form-group form centerDiv">
+    <!-- </div> -->
+    <!-- <div class="form-group form centerDiv"> -->
       <label for="username">Username</label>
       <input type="text" class="form-control" #username required>
-    </div>
-    <div class="form-group form centerDiv">
+    <!-- </div> -->
+    <!-- <div class="form-group form centerDiv"> -->
       <label for="password">Password</label>
       <input type="password" class="form-control" #password required>
-      <button type="submit" class="btn btn-primary">Sign Up</button>
+      <button type="submit" class="btn btn-primary" (click)="register(name.value, username.value, password.value); name.value=''; username.value=''; password.value=''">Sign Up</button>
     </div>
   </form>
 </div>

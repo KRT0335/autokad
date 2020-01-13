@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://mourits-lyrics.p.rapidapi.com'
+  apiBaseUrl: ''
 };
 
 /*

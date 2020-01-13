@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
+import { AuthenticationService } from './services/authentication.service';
+import {Account} from './models/Account';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +11,18 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 })
 export class AppComponent {
   title = 'Project02';
+
+  currentUser:Account;
+
+  constructor(
+    private router:Router,
+    private authenticationService:AuthenticationService
+  ){
+    this.authenticationService.currentUser.subscribe(x => this.currentUser=x);
+  }
+
+  logout(){
+    this.authenticationService.logout();
+    this.router.navigate(['./login']);
+  }
 }
