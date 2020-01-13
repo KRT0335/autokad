@@ -108,6 +108,23 @@ public class NotAboutMoviesController {
 		return null;
 	}
 	
+	@CrossOrigin(origins ="http://localhost:4200")
+	@GetMapping(value="/register/{name}/{username}/{password}")
+	public Account register(@PathVariable("name") String name,
+			@PathVariable("username") String username,
+			@PathVariable("password") String password) {
+		List<Account> acc = 
+				this.accountService.findAccountByCredentialsCheck(username, password);
+		
+		if(!acc.isEmpty()) {
+			return null;
+		}
+		
+		Account newAcc = new Account(name, username, password);
+		this.accountService.insertAccount(newAcc);
+		return newAcc;
+	}
+	
 	@GetMapping(value="/playlist/new")
 	public void insertPlaylist() {
 		this.playlistService.insertPlaylist(new Playlist(
