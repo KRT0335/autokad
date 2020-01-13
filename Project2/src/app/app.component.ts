@@ -10,7 +10,7 @@ import {Account} from './models/Account';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Project02';
+  title = 'NotAboutMovies';
 
   currentUser:Account;
 

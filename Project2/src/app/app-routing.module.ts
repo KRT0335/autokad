@@ -14,13 +14,13 @@ import { AllPlaylistsComponent } from './components/all-playlists/all-playlists.
 const routes: Routes = [
   // { path: '', redirectTo: '/home', pathMatch: 'full' },
   // { component: HomeComponent, path: "home" },
-  { component: HomeComponent, canActivate: [AuthGuard], path: ''},
+  { component: HomeComponent, path: ''},
   { component: SignupComponent, path: "signup" },
   { component: LoginComponent, path: "login" },
   { component: BylyricsComponent, path: "bylyrics" },
   { component: BysongComponent, path: "bysong" },
   { component: MyPlaylistsComponent, canActivate: [AuthGuard], path: 'myplaylists'},
-  { component: AllPlaylistsComponent, canActivate: [AuthGuard], path: 'allplaylists'},
+  { component: AllPlaylistsComponent, path: 'allplaylists'},
   { path: '**', redirectTo: ''}
 ];
 

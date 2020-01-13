@@ -11,9 +11,11 @@
   </form>
 </div>
 <div class="container color" *ngIf="song">
+  <p>{{song | json}}</p>
+  <!-- <p>{{song}}</p> -->
   <form *ngIf="acc.playlist">
     <div class="form-group form centerDiv">
-      <p>{{song | json}}</p>
+      
       <select #playlistid>
         <option value="0">Select Playlist</option>
         <option *ngFor="let playlist of acc.playlist" value={{playlist.id}}>{{playlist.playlistname}}</option>

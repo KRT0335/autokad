@@ -1,8 +1,8 @@
 <div class="color">
-    <p>{{accs | json}}</p>
+    <!-- <p>{{accs | json}}</p> -->
     <ul>
         <li *ngFor="let acc of accs">
-            <p *ngIf="acc.playlist">{{acc.username}}</p>
+            <p *ngIf="acc.playlist">Username: {{acc.username}}</p>
             <ul *ngIf="acc.playlist">
                 <li *ngFor="let playlist of acc.playlist">
                     <p>Playlist Name: {{playlist.playlistname}}</p>
