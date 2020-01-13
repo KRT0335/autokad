@@ -11,4 +11,8 @@ export class AccountService {
   register(name:string, username:string, password:string){
     return this.http.get(`http://localhost:3031/nam/register/`+name+`/`+username+`/`+password);
   }
+
+  getAccount(id:number){
+    return this.http.get<Account>('http://localhost:3031/nam/'+id);
+  }
 }

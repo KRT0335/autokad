@@ -1,0 +1,16 @@
+<div class="color">
+    <p>{{acc.playlist | json}}</p>
+    <ul>
+        <li *ngFor="let playlist of acc.playlist">
+            <p>Playlist Name: {{playlist.playlistname}}</p>
+            <ul>
+                <li *ngFor="let song of playlist.songs">
+                    <p>Song Name: {{song.songname}}</p>
+                    <p>Artist: {{song.artist}}</p>
+                    <p>Lyrics: {{song.lyrics}}</p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+

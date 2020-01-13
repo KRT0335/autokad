@@ -95,7 +95,7 @@ public class NotAboutMoviesController {
 		return this.accountService.findAccountByCredentials(u, p);
 	}
 	
-	@CrossOrigin(origins ="http://localhost:4200")
+	@CrossOrigin(origins =origin)
 	@GetMapping(value="/login/{username}/{password}")
 	public Account login(@PathVariable("username") String username,
 							@PathVariable("password") String password) {
@@ -108,7 +108,7 @@ public class NotAboutMoviesController {
 		return null;
 	}
 	
-	@CrossOrigin(origins ="http://localhost:4200")
+	@CrossOrigin(origins =origin)
 	@GetMapping(value="/register/{name}/{username}/{password}")
 	public Account register(@PathVariable("name") String name,
 			@PathVariable("username") String username,
@@ -143,6 +143,12 @@ public class NotAboutMoviesController {
 	@GetMapping(value = "/playlist/all", produces=MediaType.APPLICATION_JSON_VALUE)
 	public List<Playlist> getAllPlaylists(){
 		return this.playlistService.findAllPlaylists();
+	}
+	
+	@CrossOrigin(origins =origin)
+	@GetMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public Account findAccountById(@PathVariable("id") int id){
+		return this.accountService.findAccountById(id);
 	}
 	
 	@GetMapping(value="/song/new")
