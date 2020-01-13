@@ -11,7 +11,7 @@ import com.project2.model.Account;
 @Repository(value = "accountRepository")
 public interface AccountRepository extends JpaRepository<Account, Integer>{
 
-	public <S extends Account> S save(Account a);
+	public <A extends Account> A save(A a);
 	public List<Account> findAll();
 	
 	public Account findAccountByUsernameAndPassword(String u, String p);

@@ -12,7 +12,7 @@ import com.project2.model.Playlist;
 @Repository(value = "playlistRepository")
 public interface PlaylistRepository extends JpaRepository<Playlist, Integer>{
 
-	public <S extends Playlist> S save(Playlist p);
+	public <P extends Playlist> P save(P p);
 	public List<Playlist> findAll();
 	public Playlist findPlaylistById(int id);
 	
