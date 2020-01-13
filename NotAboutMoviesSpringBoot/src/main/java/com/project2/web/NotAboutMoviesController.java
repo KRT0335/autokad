@@ -29,7 +29,7 @@ import com.project2.service.SongService;
 
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
-@CrossOrigin(origins="http://autokad.s3-website.us-east-2.amazonaws.com/")
+@CrossOrigin()
 public class NotAboutMoviesController {
 
 	private AccountService accountService;
