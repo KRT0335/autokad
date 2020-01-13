@@ -15,6 +15,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { InterceptorService } from './services/interceptor.service';
 import { AccountService } from './services/account.service';
 import { MyPlaylistsComponent } from './components/my-playlists/my-playlists.component';
+import { AllPlaylistsComponent } from './components/all-playlists/all-playlists.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MyPlaylistsComponent } from './components/my-playlists/my-playlists.com
     NavbarComponent,
     BylyricsComponent,
     HomeComponent,
-    MyPlaylistsComponent
+    MyPlaylistsComponent,
+    AllPlaylistsComponent
   ],
   imports: [
     BrowserModule,

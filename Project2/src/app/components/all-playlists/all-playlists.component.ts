@@ -3,32 +3,28 @@ import { AccountService } from 'src/app/services/account.service';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-my-playlists',
-  templateUrl: './my-playlists.component.html',
-  styleUrls: ['./my-playlists.component.css']
+  selector: 'app-all-playlists',
+  templateUrl: './all-playlists.component.html',
+  styleUrls: ['./all-playlists.component.css']
 })
-export class MyPlaylistsComponent implements OnInit {
+export class AllPlaylistsComponent implements OnInit {
 
   public currentUser;
-  acc:Account;
+  accs:Account[];
   constructor(
     private accountService:AccountService,
     private toastr:ToastrService
   ) {
     this.currentUser = localStorage.getItem('currentUser')?JSON.parse(localStorage.getItem('currentUser')):'';
-    this.accountService.getAccount(this.currentUser.id).subscribe(acc=>this.acc=acc);
+    this.accountService.getAllAccount().subscribe(accs=>this.accs=accs);
    }
 
   ngOnInit() {
     // this.get();
   }
 
-  get():void{
-    this.accountService.getAccount(this.currentUser.id).subscribe(acc=>this.acc=acc);
-  }
-
-  printPlaylist(id:number){
-    return this.accountService.getAccount(id).subscribe(
+  printAllPlaylist(id:number){
+    return this.accountService.getAllAccount().subscribe(
       data => {
         // console.log(data);
       },

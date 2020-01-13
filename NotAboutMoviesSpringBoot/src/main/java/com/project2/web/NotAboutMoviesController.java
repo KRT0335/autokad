@@ -27,7 +27,6 @@ import com.project2.service.AccountService;
 import com.project2.service.PlaylistService;
 import com.project2.service.SongService;
 
-
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
 public class NotAboutMoviesController {
@@ -39,6 +38,7 @@ public class NotAboutMoviesController {
 	private RestTemplate restTemplate;
 
 	final String origin = "http://localhost:4200";
+
 	/*
 	 * We're using setter injection.
 	 */
@@ -46,12 +46,12 @@ public class NotAboutMoviesController {
 	public void setAccountService(AccountService accountService) {
 		this.accountService = accountService;
 	}
-	
+
 	@Autowired
 	public void setPlaylistService(PlaylistService playlistService) {
 		this.playlistService = playlistService;
 	}
-	
+
 	@Autowired
 	public void setSongService(SongService songService) {
 		this.songService = songService;
@@ -76,128 +76,151 @@ public class NotAboutMoviesController {
 		return "index";
 	}
 
-	@GetMapping(value="/all", produces=MediaType.APPLICATION_JSON_VALUE)
+	@CrossOrigin(origins = origin)
+	@GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Account> getAllAccounts() {
-		
+
 		return this.accountService.findAllAccounts();
-		
+
 	}
-	
+
 	@GetMapping(value = "/new")
 	public void postAccount() {
 		this.accountService.insertAccount(new Account("name", "username", "password"));
 	}
-	
-	@GetMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+
+	@GetMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Account getAccountByCredentials() {
 		String u = "username";
 		String p = "password";
 		return this.accountService.findAccountByCredentials(u, p);
 	}
-	
-	@CrossOrigin(origins =origin)
-	@GetMapping(value="/login/{username}/{password}")
-	public Account login(@PathVariable("username") String username,
-							@PathVariable("password") String password) {
-		Account acc = 
-				this.accountService.findAccountByCredentials(username, password);
-		
-		if(acc != null) {
+
+	@CrossOrigin(origins = origin)
+	@GetMapping(value = "/login/{username}/{password}")
+	public Account login(@PathVariable("username") String username, @PathVariable("password") String password) {
+		Account acc = this.accountService.findAccountByCredentials(username, password);
+
+		if (acc != null) {
 			return acc;
 		}
 		return null;
 	}
-	
-	@CrossOrigin(origins =origin)
-	@GetMapping(value="/register/{name}/{username}/{password}")
-	public Account register(@PathVariable("name") String name,
-			@PathVariable("username") String username,
+
+	@CrossOrigin(origins = origin)
+	@GetMapping(value = "/register/{name}/{username}/{password}")
+	public Account register(@PathVariable("name") String name, @PathVariable("username") String username,
 			@PathVariable("password") String password) {
-		List<Account> acc = 
-				this.accountService.findAccountByCredentialsCheck(username, password);
-		
-		if(!acc.isEmpty()) {
+		List<Account> acc = this.accountService.findAccountByCredentialsCheck(username, password);
+
+		if (!acc.isEmpty()) {
 			return null;
 		}
-		
+
 		Account newAcc = new Account(name, username, password);
 		this.accountService.insertAccount(newAcc);
 		return newAcc;
 	}
-	
-	@GetMapping(value="/playlist/new")
+
+	@GetMapping(value = "/playlist/new")
 	public void insertPlaylist() {
-		this.playlistService.insertPlaylist(new Playlist(
-				1, "My Hot Track", new Account("Owner of sick track", "username", "password")));
+		this.playlistService.insertPlaylist(
+				new Playlist(1, "My Hot Track", new Account("Owner of sick track", "username", "password")));
 	}
-	
-	@GetMapping(value="/playlist/new/{playlistname}/{userpk}/{username}")
-	public void insertNewPlaylist(@PathVariable("playlistname") String playlistname,
-								@PathVariable("userpk") int userpk,
-								@PathVariable("username") String username) {
-		this.playlistService.insertPlaylist(new Playlist(playlistname,
-								new Account(userpk, username)));
-		
+
+	@GetMapping(value = "/playlist/new/{playlistname}/{userpk}/{username}")
+	public void insertNewPlaylist(@PathVariable("playlistname") String playlistname, @PathVariable("userpk") int userpk,
+			@PathVariable("username") String username) {
+		this.playlistService.insertPlaylist(new Playlist(playlistname, new Account(userpk, username)));
+
 	}
-	
-	@GetMapping(value = "/playlist/all", produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Playlist> getAllPlaylists(){
+
+	@GetMapping(value = "/playlist/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Playlist> getAllPlaylists() {
 		return this.playlistService.findAllPlaylists();
 	}
-	
-	@CrossOrigin(origins =origin)
-	@GetMapping(value = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public Account findAccountById(@PathVariable("id") int id){
+
+	@CrossOrigin(origins = origin)
+	@GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Account findAccountById(@PathVariable("id") int id) {
 		return this.accountService.findAccountById(id);
 	}
-	
-	@GetMapping(value="/song/new")
+
+	@GetMapping(value = "/song/new")
 	public void insertSong() {
-		
+
 		this.songService.insertSong(new Song("songname", "artist", "lyrics"));
 	}
-	
-	@GetMapping(value = "/song/all", produces=MediaType.APPLICATION_JSON_VALUE)
-	public List<Song> getAllSongs(){
+
+	@CrossOrigin(origins = origin)
+	@GetMapping(value = "/song/new/{songname}/{artist}/{lyrics}")
+	public Song insertSong(@PathVariable("songname") String songname, @PathVariable("artist") String artist,
+			@PathVariable("lyrics") String lyrics) {
+		Song song = this.songService.findSongBySongnameAndArtistAndLyrics(songname, artist, lyrics);
+		if (song == null) {
+			this.songService.insertSong(new Song(songname, artist, lyrics));
+			song = this.songService.findSongBySongnameAndArtistAndLyrics(songname, artist, lyrics);
+		}
+		return song;
+	}
+
+	@GetMapping(value = "/song/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Song> getAllSongs() {
 		return this.songService.getAllSongs();
 	}
-	
-	@GetMapping(value="/song/add/{playlistid}/{songid}")
-	public void insertRelation(@PathVariable("playlistid") int playlistid,
-								@PathVariable("songid") int songid) {
+
+	@CrossOrigin(origins = origin)
+	@GetMapping(value = "/song/add/{playlistid}/{songid}")
+	public Integer insertRelation(@PathVariable("playlistid") int playlistid, @PathVariable("songid") int songid) {
 		Playlist tempPlaylist = this.playlistService.findPlaylistById(playlistid);
 		Song tempSong = this.songService.findSongBySongid(songid);
 		List<Playlist> tempPlaylistList = tempSong.getPlaylists();
-		List<Song> tempSongList	= tempPlaylist.getSongs();
+		List<Song> tempSongList = tempPlaylist.getSongs();
 		tempPlaylistList.add(tempPlaylist);
 		tempSongList.add(tempSong);
 		tempSong.setPlaylists(tempPlaylistList);
 		tempPlaylist.setSongs(tempSongList);
 		this.playlistService.insertPlaylist(tempPlaylist);
 		this.songService.insertSong(tempSong);
+		return null;
 	}
-	
-	@GetMapping(value="/lyrics/q/{q}")
+//	public void insertRelation(@PathVariable("playlistid") int playlistid,
+//								@PathVariable("songid") int songid) {
+//		Playlist tempPlaylist = this.playlistService.findPlaylistById(playlistid);
+//		Song tempSong = this.songService.findSongBySongid(songid);
+//		List<Playlist> tempPlaylistList = tempSong.getPlaylists();
+//		List<Song> tempSongList	= tempPlaylist.getSongs();
+//		tempPlaylistList.add(tempPlaylist);
+//		tempSongList.add(tempSong);
+//		tempSong.setPlaylists(tempPlaylistList);
+//		tempPlaylist.setSongs(tempSongList);
+//		this.playlistService.insertPlaylist(tempPlaylist);
+//		this.songService.insertSong(tempSong);
+//	}
+
+	@CrossOrigin(origins = origin)
+	@GetMapping(value = "/lyrics/q/{q}")
 	public Song getSongs(@PathVariable("q") String q) {
-		final String url = "https://mourits-lyrics.p.rapidapi.com/?q="+ q;
+		final String url = "https://mourits-lyrics.p.rapidapi.com/?q=" + q;
 		restTemplate = new RestTemplate();
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.add("Content-Type", "application/json");
 		httpHeaders.add("User-Agent", "Mozilla/5.0");
 		httpHeaders.add("X-RapidAPI-Host", "mourits-lyrics.p.rapidapi.com");
 		httpHeaders.add("X-RapidAPI-Key", "2220a256eamshe293e8ca0d6332dp1f3c26jsncc1dd78ca7e0");
-		
+
 		try {
 			HttpEntity<String> entity = new HttpEntity<String>("String", httpHeaders);
-			ResponseEntity<MouritsResult> respEntity= this.restTemplate.exchange(url, HttpMethod.GET, entity, MouritsResult.class);
-			
+			ResponseEntity<MouritsResult> respEntity = this.restTemplate.exchange(url, HttpMethod.GET, entity,
+					MouritsResult.class);
+
 			MouritsResult result = respEntity.getBody();
 			Song song = new Song(result.getSongname(), result.getArtist(), result.getResult().getLyrics());
 			return song;
-		}catch(UnknownHttpStatusCodeException e) {
+		} catch (UnknownHttpStatusCodeException e) {
 			return new Song("API NO WORK", "UH OH", "The API Mourits Lyrics is down.");
 		}
-		
+
 	}
 
 	@GetMapping(value = "/favoritejoke")
@@ -207,5 +230,4 @@ public class NotAboutMoviesController {
 		return retrievedJoke;
 	}
 
-	
 }

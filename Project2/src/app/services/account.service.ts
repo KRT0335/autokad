@@ -15,4 +15,8 @@ export class AccountService {
   getAccount(id:number){
     return this.http.get<Account>('http://localhost:3031/nam/'+id);
   }
+
+  getAllAccount(){
+    return this.http.get<Account[]>('http://localhost:3031/nam/all');
+  }
 }

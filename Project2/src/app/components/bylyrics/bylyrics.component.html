@@ -4,12 +4,21 @@
       <img id="image" src="../../../assets/images/concertpic2.jpeg" width="300" alt="Concert Photo">
       <h3 class="color center">Search by Lyrics</h3>
       <label for="lyrics"></label>
-      <input type="text" class="form-control">
+      <input type="text" class="form-control" #lyrics>
       <!-- <input type="text" class="form-control" [(ngModel)]="lyricSearch"> -->
-      <button type="submit" class="btn btn-primary" (click)="byTheLyrics()">Search</button>
+      <button type="submit" class="btn btn-primary" (click)="byTheLyrics(lyrics.value); lyrics.value=''">Search</button>
     </div>
   </form>
 </div>
-<div class="color">
-  {{song | json}}
+<div class="container color" *ngIf="song">
+  <form *ngIf="acc.playlist">
+    <div class="form-group form centerDiv">
+      <p>{{song | json}}</p>
+      <select #playlistid>
+        <option value="0">Select Playlist</option>
+        <option *ngFor="let playlist of acc.playlist" value={{playlist.id}}>{{playlist.playlistname}}</option>
+      </select>
+      <button type="submit" class="btn btn-primary" (click)="addSong(playlistid.value); playlistid.value=''">Add</button>
+    </div>
+  </form>
 </div>
