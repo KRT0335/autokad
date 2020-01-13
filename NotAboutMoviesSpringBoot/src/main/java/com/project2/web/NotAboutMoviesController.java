@@ -38,7 +38,7 @@ public class NotAboutMoviesController {
 
 	private RestTemplate restTemplate;
 
-	final String origin = "http://autokad.s3-website.us-east-2.amazonaws.com/";
+//	final String origin = "http://autokad.s3-website.us-east-2.amazonaws.com/";
 
 	/*
 	 * We're using setter injection.
@@ -173,7 +173,7 @@ public class NotAboutMoviesController {
 	}
 
 	@GetMapping(value = "/song/add/{playlistid}/{songid}")
-	public void insertRelation(@PathVariable("playlistid") int playlistid, @PathVariable("songid") int songid) {
+	public Integer insertRelation(@PathVariable("playlistid") int playlistid, @PathVariable("songid") int songid) {
 		Playlist tempPlaylist = this.playlistService.findPlaylistById(playlistid);
 		Song tempSong = this.songService.findSongBySongid(songid);
 		List<Playlist> tempPlaylistList = tempSong.getPlaylists();
@@ -184,7 +184,7 @@ public class NotAboutMoviesController {
 		tempPlaylist.setSongs(tempSongList);
 		this.playlistService.insertPlaylist(tempPlaylist);
 		this.songService.insertSong(tempSong);
-//		return 1;
+		return 1;
 	}
 
 //	public void insertRelation(@PathVariable("playlistid") int playlistid,
