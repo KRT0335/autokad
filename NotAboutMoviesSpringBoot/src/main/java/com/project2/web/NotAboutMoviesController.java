@@ -29,7 +29,7 @@ import com.project2.service.SongService;
 
 @RestController(value = "NAMController")
 @RequestMapping(value = "/nam")
-@CrossOrigin()
+@CrossOrigin(origins="http://autokad.s3-website.us-east-2.amazonaws.com/")
 public class NotAboutMoviesController {
 
 	private AccountService accountService;
@@ -156,8 +156,7 @@ public class NotAboutMoviesController {
 		this.songService.insertSong(new Song("songname", "artist", "lyrics"));
 	}
 
-
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/new/{songname}/{artist}/{lyrics}")
 	public Song insertSong(@PathVariable("songname") String songname, @PathVariable("artist") String artist,
 			@PathVariable("lyrics") String lyrics) {
@@ -174,7 +173,7 @@ public class NotAboutMoviesController {
 		return this.songService.getAllSongs();
 	}
 
-	@CrossOrigin(origins=origin)
+//	@CrossOrigin(origins=origin)
 	@GetMapping(value = "/song/add/{playlistid}/{songid}")
 	public Integer insertRelation(@PathVariable("playlistid") int playlistid, @PathVariable("songid") int songid) {
 		Playlist tempPlaylist = this.playlistService.findPlaylistById(playlistid);
